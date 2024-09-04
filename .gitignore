@@ -1,3 +1,7 @@
-/bin/
-/.vs/
-/obj/
+/goodgine/bin/
+/goodgine/.vs/
+/goodgine/obj/
+
+/test-project/bin/
+/test-project/.vs/
+/test-project/obj/

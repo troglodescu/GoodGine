@@ -1,12 +1,17 @@
-﻿// See https://aka.ms/new-console-template for more information
+﻿using Good;
 using System.Reflection;
-using Good;
+
+Type TypeFinder(string arg)
+{
+    return Type.GetType(arg);
+}
 
 Console.WriteLine(Assembly.GetEntryAssembly().Location);
 
-var pathToScene = $"{Assembly.GetEntryAssembly().Location}\\..\\..\\..\\..\\TestProj\\Scenes\\Scene1.scene";
+var pathToScene = $"{Assembly.GetEntryAssembly().Location}\\..\\..\\..\\..\\Scenes\\Scene1.scene";
 
-var scene = new Scene();
+var scene = new Scene(TypeFinder);
+
 try
 {
     scene.Load(pathToScene);

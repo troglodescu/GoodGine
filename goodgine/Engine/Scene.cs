@@ -6,6 +6,13 @@ namespace Good;
 public class Scene
 {
     private TextParser parser;
+    private Func<string, Type> typeFinder;
+
+    public Scene(Func<string, Type> typeFinder)
+    {
+        this.typeFinder = typeFinder;
+    }
+
     public List<GoodBject> GoodBjects { get; set; } = new List<GoodBject>();
 
     public void Load(string path)
@@ -51,10 +58,14 @@ public class Scene
             parser.Consume(SPACE);
 
             var componentType = parser.ConsumeAndGetNextWordWithoutWhiteSpaces();
-            var type = Type.GetType(componentType);
+            var type = typeFinder(componentType);
             if (type == null)
             {
-                throw new Exception($"{parser.LocationString}:\nComponent {componentType} not found");
+                type = Type.GetType(componentType);
+                if (type == null)
+                {
+                    throw new Exception($"{parser.LocationString}:\nComponent {componentType} not found");
+                }
             }
 
             var component = Activator.CreateInstance(type) as Component;
