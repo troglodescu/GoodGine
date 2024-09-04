@@ -1,17 +1,14 @@
-GoodBject Pepso
+GoodBject Camera
     Components
-        Component Good.Engine.Transform2D
-            Position 23.4 34
-            Rotation 30
+        Component GoodGine.ConsoleApp.Camera
     Children
-        GoodBject Fak
-            Components
-                Component Good.Engine.Transform2D
-                    Position -2 4
-                    Rotation 69
-                Component Tits
-                    Fuck
-            Children
-GoodBject Fak
+GoodBject Player
     Components
+        Component GoodGine.ConsoleApp.Renderer
+            3 4
+            ╔════╗
+            ║    ║
+            ╚════╝
+        Component Player
+            ComponentReference GoodGine.ConsoleApp.Camera Camera
     Children

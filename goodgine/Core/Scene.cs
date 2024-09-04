@@ -1,21 +1,24 @@
-﻿using SzUtils.Text;
-using static SzUtils.Text.TextParser;
+﻿using GoodGine.TextParsing;
+using static GoodGine.TextParsing.TextParser;
 
-namespace Good;
+namespace GoodGine;
 
 public class Scene
 {
     private TextParser parser;
     private Func<string, Type> typeFinder;
 
-    public Scene(Func<string, Type> typeFinder)
+    private bool shouldQuit = false;
+
+    internal Scene(Func<string, Type> typeFinder)
     {
         this.typeFinder = typeFinder;
     }
 
-    public List<GoodBject> GoodBjects { get; set; } = new List<GoodBject>();
+    internal bool ShouldQuit => shouldQuit;
+    internal List<GoodBject> GoodBjects { get; set; } = new List<GoodBject>();
 
-    public void Load(string path)
+    internal void Load(string path)
     {
         parser = CreateParserForFile(path);
 
@@ -24,6 +27,28 @@ public class Scene
         while (!parser.HasReachedEnd)
         {
             ParseGoodBjectRecursively(tabCount, null);
+        }
+
+        foreach (var go in GoodBjects)
+        {
+            go.Awake();
+        }
+        foreach (var go in GoodBjects)
+        {
+            go.Start();
+        }
+    }
+
+    internal void Quit()
+    {
+        shouldQuit = true;
+    }
+
+    internal void Update()
+    {
+        foreach (var go in GoodBjects)
+        {
+            go.Update();
         }
     }
 
@@ -75,6 +100,8 @@ public class Scene
             //custom component creation and consumption, for now just read some shit
 
             component.Parse(parser, tabCount);
+
+            component.SetGoodBject(goodBject);
 
             goodBject.Components.Add(component);
         }

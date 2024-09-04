@@ -1,4 +1,4 @@
-﻿namespace SzUtils.Text;
+﻿namespace GoodGine.TextParsing;
 
 public class TextParser
 {
@@ -36,6 +36,18 @@ public class TextParser
 
     public string LocationString => $"Text:{textName}\nat line {lineIndex + 1} column {columnIndex}";
     private string currentLine => lines[lineIndex];
+
+    private string remainingLine
+    {
+        get
+        {
+            if (columnIndex < currentLine.Length)
+            {
+                return currentLine.Substring(columnIndex);
+            }
+            return null;
+        }
+    }
 
     public static TextParser CreateParserForFile(string path)
     {
@@ -93,7 +105,7 @@ public class TextParser
         }
     }
 
-    internal string ConsumeAndGetNextWordWithoutWhiteSpaces()
+    public string ConsumeAndGetNextWordWithoutWhiteSpaces()
     {
         if (currentLine[columnIndex] == ' ')
         {
@@ -109,7 +121,7 @@ public class TextParser
         return word;
     }
 
-    internal string GetNextWordWithoutSpaces()
+    public string GetNextWordWithoutSpaces()
     {
         var word = string.Empty;
 
@@ -128,8 +140,10 @@ public class TextParser
         return word;
     }
 
-    internal bool CanConsumeTabs(int tabCount)
+    public bool CanConsumeTabs(int tabCount)
     {
+        if (HasReachedEnd) return false;
+
         var totalWhiteSpaces = tabCount * TAB.Length;
 
         if (columnIndex + totalWhiteSpaces > currentLine.Length)
@@ -144,6 +158,13 @@ public class TextParser
             }
         }
         return true;
+    }
+
+    public string ReadRestOfLine()
+    {
+        var restOfLine = currentLine.Substring(columnIndex);
+        columnIndex = currentLine.Length;
+        return restOfLine;
     }
 
     private void ThrowException(string message)

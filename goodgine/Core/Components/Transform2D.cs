@@ -1,8 +1,9 @@
-﻿using SzUtils;
-using SzUtils.Text;
-using static SzUtils.Text.TextParser;
+﻿using GoodGine.Math;
+using GoodGine.TextParsing;
 
-namespace Good.Engine;
+namespace GoodGine;
+
+using static TextParser;
 
 public class Transform2D : Component
 {
@@ -29,6 +30,11 @@ public class Transform2D : Component
         parser.Consume(SPACE);
         Rotation = double.Parse(parser.ConsumeAndGetNextWordWithoutWhiteSpaces());
         parser.MoveToNextLine();
+    }
+
+    public override void Awake()
+    {
+        Console.WriteLine($"Awake {nameof(Transform2D)} {Position.x} {Position.y}");
     }
 
     public override void Update()
