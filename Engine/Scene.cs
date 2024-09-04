@@ -1,5 +1,4 @@
-﻿using Good.Engine.Components;
-using SzUtils.Text;
+﻿using SzUtils.Text;
 using static SzUtils.Text.TextParser;
 
 namespace Good;
@@ -52,10 +51,18 @@ public class Scene
             parser.Consume(SPACE);
 
             var componentType = parser.ConsumeAndGetNextWordWithoutWhiteSpaces();
+            var type = Type.GetType(componentType);
+            if (type == null)
+            {
+                throw new Exception($"{parser.LocationString}:\nComponent {componentType} not found");
+            }
+
+            var component = Activator.CreateInstance(type) as Component;
+
             parser.MoveToNextLine();
 
             //custom component creation and consumption, for now just read some shit
-            var component = new Transform2D();
+
             component.Parse(parser, tabCount);
 
             goodBject.Components.Add(component);

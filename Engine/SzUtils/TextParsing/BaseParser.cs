@@ -34,6 +34,7 @@ public class TextParser
         }
     }
 
+    public string LocationString => $"Text:{textName}\nat line {lineIndex + 1} column {columnIndex}";
     private string currentLine => lines[lineIndex];
 
     public static TextParser CreateParserForFile(string path)
@@ -147,6 +148,6 @@ public class TextParser
 
     private void ThrowException(string message)
     {
-        throw new Exception($"Text:{textName}\nat line {lineIndex + 1} column {columnIndex}:\n{message}");
+        throw new Exception($"{LocationString}:\n{message}");
     }
 }

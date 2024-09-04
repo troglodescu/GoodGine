@@ -1,12 +1,12 @@
 GoodBject Pepso
     Components
-        Component GoodGine.Transform2D
+        Component Good.Engine.Transform2D
             Position 23.4 34
             Rotation 30
     Children
         GoodBject Fak
             Components
-                Component GoodGine.Transform2D
+                Component Good.Engine.Transform2D
                     Position -2 4
                     Rotation 69
             Children

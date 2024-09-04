@@ -2,7 +2,7 @@
 using SzUtils.Text;
 using static SzUtils.Text.TextParser;
 
-namespace Good.Engine.Components;
+namespace Good.Engine;
 
 public class Transform2D : Component
 {
@@ -10,7 +10,7 @@ public class Transform2D : Component
 
     public double Rotation;
 
-    public void Parse(TextParser parser, int tabCount)
+    public override void Parse(TextParser parser, int tabCount)
     {
         parser.ConsumeTabs(tabCount + 3);
         Position = new Vector2Double();
@@ -29,5 +29,9 @@ public class Transform2D : Component
         parser.Consume(SPACE);
         Rotation = double.Parse(parser.ConsumeAndGetNextWordWithoutWhiteSpaces());
         parser.MoveToNextLine();
+    }
+
+    public override void Update()
+    {
     }
 }

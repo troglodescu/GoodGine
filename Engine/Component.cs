@@ -1,5 +1,10 @@
-﻿namespace Good;
+﻿using SzUtils.Text;
 
-public class Component
+namespace Good;
+
+public abstract class Component
 {
+    public abstract void Parse(TextParser parser, int tabCount);
+
+    public abstract void Update();
 }
